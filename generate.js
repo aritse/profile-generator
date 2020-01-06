@@ -25,7 +25,7 @@ const colors = {
   }
 };
 
-function generateHTML(data) {
+function generate(data) {
   return `<!DOCTYPE html>
   <html lang="en">
      <head>
@@ -170,5 +170,73 @@ function generateHTML(data) {
               zoom: .75; 
             } 
            }
-        </style>`;
+        </style>
+        
+        <body>
+  <div class="wrapper">
+    <div class="photo-header">
+      <img src=${data.image} alt="profile image">
+      <h1>Hi!</h1>
+      <h2>My name is ${data.username}!</h2>
+      <h4>Currently @ Trilogy Education Services</h4>
+      <div class="links-nav">
+        <div class="nav-link">
+          Seattle, WA
+        </div>
+        <div class="nav-link">
+        <a target="_blank" href=${data.github}>GitHub</a>
+        </div>
+        <div class="nav-link">
+          Blog
+        </div>
+      </div>
+    </div>
+  </div>
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2>I build things and teach people to code.</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <h2> Public Repositories</h2>
+            <h2>${data.repositories}</h2>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h2> Followers</h2>
+            <h2>${data.followers}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <h2> GitHub Stars</h2>
+            <h2>${data.stars}</h2>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <h2> Following</h2>
+            <h2>${data.following}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="wrapper"></div>
+</body>
+</html>
+        
+        `;
 }
+
+module.exports = {
+  colors: colors,
+  generate: generate
+};
