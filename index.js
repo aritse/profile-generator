@@ -2,6 +2,8 @@ const inquirer = require("inquirer");
 const axios = require("axios");
 const html = require("./generate");
 const fs = require("fs");
+const pdf = require("pdfcrowd");
+const util = require("util");
 
 const questions = [
   { type: "input", name: "username", message: "What is your GitHub username?" },
@@ -10,12 +12,7 @@ const questions = [
 
 let response;
 
-async function writeToFile(fileName, data) {
-  fs.writeFile(fileName, data, error => {
-    if (error) throw error;
-    console.log("created", fileName);
-  });
-}
+const writeToFileAsync = util.promisify(fs.writeFile);
 
 async function init() {
   try {
@@ -38,9 +35,13 @@ async function init() {
     response = await axios.get(owner.starred_url.replace(/{\/owner}{\/repo}/, ""));
     dev.stars = response.data.length;
 
-    console.log(dev);
+    await writeToFileAsync("profile.html", html.generate(dev));
 
-    writeToFile("profile.html", html.generate(dev));
+    const client = new pdf.HtmlToPdfClient("demo", "ce544b6ea52a5621fb9d55f8b542d14d");
+    client.convertFileToFile("profile.html", "profile.pdf", error => {
+      if (error) throw error;
+      console.log("created profile.pdf");
+    });
   } catch (error) {
     console.log(error);
   }
