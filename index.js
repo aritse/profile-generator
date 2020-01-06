@@ -37,7 +37,7 @@ async function init() {
 
     await writeToFileAsync("profile.html", html.generate(dev));
 
-    const client = new pdf.HtmlToPdfClient("demo", "ce544b6ea52a5621fb9d55f8b542d14d");
+    const client = new pdf.HtmlToPdfClient("aritse", "c3cba596346b713632a35be017708a44");
     client.convertFileToFile("profile.html", "profile.pdf", error => {
       if (error) throw error;
       console.log("created profile.pdf");
