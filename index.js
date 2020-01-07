@@ -1,38 +1,37 @@
 const inquirer = require("inquirer");
 const axios = require("axios");
-const html = require("./generate");
-const fs = require("fs");
 const pdf = require("pdfcrowd");
+const fs = require("fs");
 const util = require("util");
-
-const questions = [
-  { type: "input", name: "username", message: "What is your GitHub username?" },
-  { type: "list", name: "color", message: "Please choose a color", choices: ["red"] }
-];
-
-let response;
+const html = require("./generate");
 
 const writeToFileAsync = util.promisify(fs.writeFile);
 
+const questions = [
+  { type: "input", name: "username", message: "What is your GitHub username?" },
+  { type: "list", name: "color", message: "Please choose a color", choices: ["red", "green", "blue", "pink"] }
+];
+
 async function init() {
   try {
-    const answers = await inquirer.prompt(questions);
-    dev.username = answers.username;
-    dev.color = answers.color;
+    const { username, color } = await inquirer.prompt(questions);
+    const { data } = await axios.get(`https://api.github.com/users/${username}`);
+    const dev = (({ avatar_url, html_url, name, public_repos, company, blog, location, bio, following, followers }) => ({
+      avatar_url,
+      html_url,
+      name,
+      public_repos,
+      company,
+      blog,
+      location,
+      bio,
+      following,
+      followers
+    }))(data);
+    dev.color = color;
 
-    response = await axios.get(`https://api.github.com/users/${dev.username}/repos?per_page=100`);
-    dev.repositories = response.data.length;
-    const owner = response.data[0].owner;
-    dev.image = owner.avatar_url;
-    dev.github = owner.html_url;
-
-    response = await axios.get(owner.followers_url);
-    dev.followers = response.data.length;
-
-    response = await axios.get(owner.following_url.replace(/{\/other_user}/, ""));
-    dev.following = response.data.length;
-
-    response = await axios.get(owner.starred_url.replace(/{\/owner}{\/repo}/, ""));
+    const url = data.starred_url.replace("{/owner}{/repo}", "");
+    const response = await axios.get(url);
     dev.stars = response.data.length;
 
     await writeToFileAsync("profile.html", html.generate(dev));

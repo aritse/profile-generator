@@ -165,7 +165,12 @@ function generate(data) {
            font-weight: bold;
            }
   
-           @media print { 
+           .logo {
+             width: 20px;
+             height: 20px;
+          }
+
+          @media print { 
             body { 
               zoom: .75; 
             } 
@@ -173,70 +178,92 @@ function generate(data) {
         </style>
         
         <body>
+        
+  <div class="col">
   <div class="wrapper">
     <div class="photo-header">
-      <img src=${data.image} alt="profile image">
+      <img src="${data.avatar_url}" alt="profile image">
       <h1>Hi!</h1>
-      <h2>My name is ${data.username}!</h2>
-      <h4>Currently @ Trilogy Education Services</h4>
+      <h4>My name is ${data.name}!</h4>
+      <h4>Currently, ${data.company}</h4>
+      <br>
+      <br>
       <div class="links-nav">
         <div class="nav-link">
-          Seattle, WA
+        <img src="map.PNG" alt="google map logo" class="logo" style="width:40px; height:40px">
+        <a href="http://maps.google.com/maps?q=${data.location}" target="_blank">${data.location}</a>
         </div>
         <div class="nav-link">
-        <a target="_blank" href=${data.github}>GitHub</a>
+        <img src="github.png" alt="github logo" class="logo" style="width:40px; height:40px">
+        <a target="_blank" href="${data.html_url}">GitHub</a>
         </div>
         <div class="nav-link">
-          Blog
+        <img src="portfolio.png" alt="portfolio logo" class="logo" style="width:40px; height:40px">
+        <a target="_blank" href="${data.blog}">Portfolio</a>
         </div>
       </div>
+    </div>
     </div>
   </div>
   <main>
     <div class="container">
       <div class="row">
         <div class="col">
-          <h2>I build things and teach people to code.</h2>
+          <h4>${data.bio}</h4>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <div class="card">
-            <h2> Public Repositories</h2>
-            <h2>${data.repositories}</h2>
+            <h4>Public Repos</h4>
+            <h4>${data.public_repos}</h4>
           </div>
         </div>
         <div class="col">
           <div class="card">
-            <h2> Followers</h2>
-            <h2>${data.followers}</h2>
+            <h4>Followers</h4>
+            <h4>${data.followers}</h4>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <div class="card">
-            <h2> GitHub Stars</h2>
-            <h2>${data.stars}</h2>
+            <h4>GitHub Stars</h4>
+            <h4>${data.stars}</h4>
           </div>
         </div>
         <div class="col">
           <div class="card">
-            <h2> Following</h2>
-            <h2>${data.following}</h2>
+            <h4>Following</h4>
+            <h4>${data.following}</h4>
           </div>
         </div>
       </div>
     </div>
   </main>
-  <div class="wrapper"></div>
+  <div class="col">
+    <div class="wrapper">
+      <div class="photo-header" style="visibility: hidden;">
+        <img src="#" alt="profile image">
+        <h1>Hi!</h1>
+        <h2>My name is aritse!</h2>
+        <h4>Currently @ Trilogy Education Services</h4>
+        <div class="links-nav">
+          <div class="nav-link">
+            Seattle, WA
+          </div>
+          <div class="nav-link">
+            <a target="_blank" href="#">GitHub </a> </div>
+            <div class="nav-link">
+              Blog
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
-</html>
-        
-        `;
+</html>`;
 }
 
-module.exports = {
-  colors: colors,
-  generate: generate
-};
+module.exports = { colors: colors, generate: generate };
