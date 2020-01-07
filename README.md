@@ -6,7 +6,7 @@ This is a command-line application that dynamically generates a PDF profile from
 node index.js
 ```
 
-The user will be prompted for a favorite color, which will be used as the background color for cards. The PDF will be populated with the following:
+The user will be prompted for a color, which will be used as the background color for cards. The PDF will be populated with the following:
 
 - Profile image
 - User name
@@ -19,3 +19,5 @@ The user will be prompted for a favorite color, which will be used as the backgr
 - Number of followers
 - Number of GitHub stars
 - Number of users following
+
+![Profile Screenshot](Screenshot.PNG)

@@ -26,7 +26,8 @@ const colors = {
 };
 
 function generate(data) {
-  return `<!DOCTYPE html>
+  return `
+  <!DOCTYPE html>
   <html lang="en">
      <head>
         <meta charset="UTF-8" />
@@ -165,18 +166,12 @@ function generate(data) {
            font-weight: bold;
            }
   
-           .logo {
-             width: 20px;
-             height: 20px;
-          }
-
           @media print { 
             body { 
               zoom: .75; 
             } 
            }
         </style>
-        
         <body>
         
   <div class="col">
@@ -190,16 +185,13 @@ function generate(data) {
       <br>
       <div class="links-nav">
         <div class="nav-link">
-        <img src="map.PNG" alt="google map logo" class="logo" style="width:40px; height:40px">
         <a href="http://maps.google.com/maps?q=${data.location}" target="_blank">${data.location}</a>
         </div>
         <div class="nav-link">
-        <img src="github.png" alt="github logo" class="logo" style="width:40px; height:40px">
         <a target="_blank" href="${data.html_url}">GitHub</a>
         </div>
         <div class="nav-link">
-        <img src="portfolio.png" alt="portfolio logo" class="logo" style="width:40px; height:40px">
-        <a target="_blank" href="${data.blog}">Portfolio</a>
+        <a target="_blank" href="https://${data.blog}">Portfolio</a>
         </div>
       </div>
     </div>
@@ -242,26 +234,6 @@ function generate(data) {
       </div>
     </div>
   </main>
-  <div class="col">
-    <div class="wrapper">
-      <div class="photo-header" style="visibility: hidden;">
-        <img src="#" alt="profile image">
-        <h1>Hi!</h1>
-        <h2>My name is aritse!</h2>
-        <h4>Currently @ Trilogy Education Services</h4>
-        <div class="links-nav">
-          <div class="nav-link">
-            Seattle, WA
-          </div>
-          <div class="nav-link">
-            <a target="_blank" href="#">GitHub </a> </div>
-            <div class="nav-link">
-              Blog
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </body>
 </html>`;
 }
