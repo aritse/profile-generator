@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const axios = require("axios");
-const pdf = require("pdfcrowd");
+const pdf = require("html-pdf");
 const fs = require("fs");
 const util = require("util");
 const html = require("./generate");
@@ -36,10 +36,10 @@ async function init() {
 
     await writeToFileAsync("profile.html", html.generate(dev));
 
-    const client = new pdf.HtmlToPdfClient("aritse", "c3cba596346b713632a35be017708a44");
-    client.convertFileToFile("profile.html", "profile.pdf", error => {
-      if (error) throw error;
-      console.log("created profile.pdf");
+    const options = { format: "Letter" };
+    pdf.create(html.generate(dev), options).toFile("./profile.pdf", function(err, res) {
+      if (err) return console.log(err);
+      console.log(res);
     });
   } catch (error) {
     console.log(error);
