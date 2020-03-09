@@ -55,6 +55,9 @@ function generate(data) {
            .wrapper {
            background-color: ${colors[data.color].wrapperBackground};
            padding-top: 100px;
+           background-repeat: no-repeat;
+           background-size: cover;
+           background-image: url("https://res.cloudinary.com/tserenda/image/upload/v1583782247/github_hjbvel.png");
            }
            body {
            background-color: white;
@@ -179,9 +182,7 @@ function generate(data) {
     <div class="photo-header">
       <img src="${data.avatar_url}" alt="profile image">
       <h1>Hi!</h1>
-      <h4>My name is ${data.name}!</h4>
-      <h4>Currently, ${data.company}</h4>
-      <br>
+      <h4>My name is ${data.name}! Currently, ${data.company}</h4>      <br>
       <br>
       <div class="links-nav">
         <div class="nav-link">

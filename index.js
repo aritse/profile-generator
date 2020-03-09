@@ -5,7 +5,7 @@ const fs = require("fs");
 const util = require("util");
 const html = require("./generate");
 
-const writeToFileAsync = util.promisify(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
 const questions = [
   { type: "input", name: "username", message: "What is your GitHub username?" },
@@ -30,31 +30,20 @@ async function init() {
     }))(data);
     dev.color = color;
 
-    const url = data.starred_url.replace("{/owner}{/repo}", "");
-    const response = await axios.get(url);
+    const response = await axios.get(data.starred_url.replace("{/owner}{/repo}", ""));
     dev.stars = response.data.length;
 
-    await writeToFileAsync("profile.html", html.generate(dev));
-
+    const profile = html.generate(dev);
+    await writeFileAsync("profile.html", profile, "utf8");
     const options = { format: "Letter" };
-    pdf.create(html.generate(dev), options).toFile("./profile.pdf", function(err, res) {
-      if (err) return console.log(err);
-      console.log(res);
+
+    pdf.create(profile, options).toFile("profile.pdf", (error, response) => {
+      if (error) throw error;
+      console.log(response);
     });
   } catch (error) {
     console.log(error);
   }
 }
-
-const dev = {
-  username: "",
-  color: "",
-  repositories: 0,
-  image: "",
-  github: "",
-  followers: -1,
-  following: -1,
-  stars: -1
-};
 
 init();
